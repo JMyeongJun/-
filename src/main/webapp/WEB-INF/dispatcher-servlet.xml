@@ -30,7 +30,7 @@
     destroy-method="close">
 	    <property name="driverClassName"  value="oracle.jdbc.OracleDriver" />
 	    <property name="url"              value="jdbc:oracle:thin:@localhost:1521:xe" />
-	    <property name="username"         value="test" />
+	    <property name="username"         value="BOOKROOM" />
 	    <property name="password"         value="1234" />    
     </bean>
     
@@ -57,6 +57,11 @@
 			<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory">
 			</constructor-arg>
 		</bean>
+		
+		<!-- NaverLoginBO Class에 대한 Bean설정 추가 -->	
+    <bean id="naverLoginBO" 
+          class="com.bookroom.login.NaverLoginBO" >
+    </bean>
 </beans>
 
 

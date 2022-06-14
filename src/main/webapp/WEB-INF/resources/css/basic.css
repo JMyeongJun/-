@@ -81,3 +81,4 @@ a {
 [name=searchOption] {height: 36px;}
 #keyword {height: 30px; width: 300px;}
 .btnOk {height: 35px;}
+.btn{cursor: pointer;}

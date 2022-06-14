@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="User">
+    <!-- 로그인시 유저 데이터 INSERT -->
+    <insert id="UserInsert" >
+    	MERGE INTO USER_TB ut
+    		USING (
+    			SELECT 
+    				#{userid} AS pk_column, 
+    				#{username} AS USER_NAME,
+						#{email} AS EMAIL, 
+						#{mobile} AS MOBILE, 
+						#{gender} AS GENDER, 
+						#{age} AS AGE, 
+						#{birthyear} BIRTHYEAR
+					FROM dual
+    		) dummy
+    		ON (ut.USER_ID = dummy.pk_column) 
+    	WHEN NOT MATCHED THEN
+    		INSERT(
+    			USER_ID,
+    			USER_NAME,
+    			EMAIL,
+    			MOBILE,
+    			GENDER,
+    			AGE,
+    			BIRTHYEAR
+    		) VALUES(
+    			dummy.pk_column,
+    			dummy.USER_NAME,
+    			dummy.EMAIL,
+    			dummy.MOBILE,
+    			dummy.GENDER,
+    			dummy.AGE,
+    			dummy.BIRTHYEAR
+    		)
+    </insert>
+</mapper>

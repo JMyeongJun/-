@@ -3,9 +3,9 @@ package com.bookroom.search.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bookroom.book.vo.BookVo;
 import com.bookroom.search.service.SearchService;
 import com.bookroom.search.vo.SearchVo;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -16,27 +16,27 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 public class SearchController {
 
 	@Autowired
-	private SearchService newsService;
+	private SearchService searchService;
 
-	// 검색버튼 눌렸을 때
+	// 검색
 	@RequestMapping
-	@ResponseBody
-	public ModelAndView search(String keyword, String searchOption, String sortOption, String display, String pageNum) throws JsonMappingException, JsonProcessingException {
-		
-		if(sortOption == null) {
+	public ModelAndView search(String keyword, String searchOption, String sortOption, String display, String pageNum)
+			throws JsonMappingException, JsonProcessingException {
+
+		if (sortOption == null) {
 			sortOption = "sim";
 		}
-		if(display == null) {
+		if (display == null) {
 			display = "10";
 		}
-		if(pageNum == null) {
+		if (pageNum == null) {
 			pageNum = "1";
 		}
-		
+
 		ModelAndView mv = new ModelAndView();
-		
-		SearchVo searchVo = newsService.searchBooks(keyword, searchOption, sortOption, display, pageNum);
-		
+
+		SearchVo searchVo = searchService.searchBooks(keyword, searchOption, sortOption, display, pageNum);
+
 		mv.addObject("keyword", keyword);
 		mv.addObject("searchOption", searchOption);
 		mv.addObject("sortOption", sortOption);
@@ -44,19 +44,23 @@ public class SearchController {
 		mv.addObject("pageNum", pageNum);
 		mv.addObject("total", searchVo.getTotal());
 		mv.addObject("bookList", searchVo.getItems());
+
+		mv.setViewName("search/searchList");
+		return mv;
+	}
+
+	// 책정보 가져오기(isbn)
+	@RequestMapping("/Prod")
+	public ModelAndView prod(String isbn) {
+		ModelAndView mv = new ModelAndView();
 		
-		mv.setViewName("search");
+		// isbn에 해당되는 책 정보 가져오기
+		BookVo book = searchService.searchBookByISBN(isbn);
+		
+		mv.addObject("book", book);
+
+		mv.setViewName("search/view");
 		return mv;
 	}
 	
-	@RequestMapping("/Prod")
-	public ModelAndView prod(String title, String price) {
-		ModelAndView mv = new ModelAndView();
-		
-		System.out.println(title);
-		System.out.println(price);
-		
-		mv.setViewName("search");
-		return mv;
-	}
 }

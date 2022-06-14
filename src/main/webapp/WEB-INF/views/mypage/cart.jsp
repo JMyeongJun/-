@@ -8,8 +8,6 @@
 <link rel="stylesheet" href="/css/basic.css" />
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="/js/categoryList.js"></script>
-<script type="text/javascript" src="/js/login.js"></script>
 <script>
 	$(function(){
 		// 로그인버튼 관련
@@ -29,11 +27,6 @@
 		});
 	});
 </script>
-<style>
-	#top {grid-row: 1 / 3;}
-	#main {display: none;}
-	#top h1 {margin: 150px;}
-</style>
 </head>
 <body>
 	<div id="container">
@@ -49,14 +42,17 @@
 				</c:choose>
 			</div>
 			<div id="side_bottom">
-				<ul id="sideList"></ul>
+				<ul id="sideList">
+					<li><a href="/Mypage/Cart" class="active">장바구니</a></li>
+					<li><a href="/Mypage/OrderList">주문내역</a></li>
+					<li><a href="/Mypage/Pay">결제</a></li>
+				</ul>
 			</div>
 		</div>
 		<div id="top">
 			<h1><a href="/">책방</a></h1>
 			<div id="top_bottom">
-			<%@ include file="/WEB-INF/include/topBottom.jsp" %>
-				<!-- <form action="/Search" id="searchForm">
+				<form action="/Search" id="searchForm">
 					<select name="searchOption" >
 					  <option value="all">통합검색</option>
 					  <option value="title">제목검색</option>
@@ -64,11 +60,11 @@
 				  </select>
 				  <input type="text" name="keyword" id="keyword" autocomplete='off' placeholder="검색" />
 				  <input type="submit" class="btnOk" value="검색" />
-				</form> -->
+				</form>
 			</div>
 		</div>
 		<div id="main">
-			<h2>main입니다</h2>
+			<h2>${username} cart</h2>
 		</div>
 	</div>
 </body>

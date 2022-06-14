@@ -108,5 +108,12 @@ public class BookVo {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	@Override
+	public String toString() {
+		return "BookVo [title=" + title + ", link=" + link + ", image=" + image + ", author=" + author + ", price="
+				+ price + ", discount=" + discount + ", publisher=" + publisher + ", pubdate=" + pubdate + ", isbn="
+				+ isbn + ", description=" + description + "]";
+	}
 	
 }

@@ -19,7 +19,7 @@
 				<button>주문내역</button>
 				</div>
 			<div id="side_bottom">
-				<ul id="categoryList"></ul>
+				<ul id="sideList"></ul>
 			</div>
 		</div>
 		<div id="top">
