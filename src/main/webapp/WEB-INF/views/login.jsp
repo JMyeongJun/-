@@ -7,6 +7,9 @@
 <style>
 	body {
 	background-color: rgba(194, 222, 209);
+	width:100%;
+	margin-top: 250px;
+	text-align: center;
 	}
 	#logo {
  	text-decoration: none;

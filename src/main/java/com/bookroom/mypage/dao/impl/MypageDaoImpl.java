@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.bookroom.cart.vo.CartVo;
 import com.bookroom.mypage.dao.MypageDao;
 import com.bookroom.mypage.vo.MypageVo;
 
@@ -26,23 +27,37 @@ public class MypageDaoImpl implements MypageDao {
 	}
 
 	@Override
-	public List<MypageVo> userView(String UserNum) {
-		List<MypageVo> userView = sqlSession.selectList("User.UserSelect", UserNum);
-		return userView;
-	}
-
-	@Override
 	public List<MypageVo> getOrderListByPeriod(HashMap<String, Object> map, String userid) {
 
 		System.out.println("적용됨");
 		map.put("userid", userid);
 		List<MypageVo> list = sqlSession.selectList("OrderList.getOrderListByPeriod", map);
-		System.out.println(list);
+		System.out.println("다오 리스트:" + list);
 		return list;
 	}
 
 	@Override
-	public void insertOrder(String userid, String zipcode, String address, String payment, String isbn, String quantity) {
+	public List<CartVo> userView(String UserNum) {
+		List<CartVo> userView = sqlSession.selectList("User.UserSelect", UserNum);
+		return userView;
+	}
+
+	@Override
+	public void insertCart(HashMap<String, Object> map) {
+		sqlSession.insert("OrderList.InsertCart", map);
+	}
+
+	@Override
+	public int deleteCart(HashMap<String, Object> map, String userid) {
+		map.put("userid", userid);
+		System.out.println("DaoImpl() map=" + map);
+		int deleteCart = sqlSession.delete("User.deleteCart", map);
+		return deleteCart;
+	}
+
+	@Override
+	public void insertOrder(String userid, String zipcode, String address, String payment, String isbn,
+			String quantity) {
 		Map<String, Object> orderMap = new HashMap<String, Object>();
 		orderMap.put("userid", userid);
 		orderMap.put("zipcode", zipcode);
@@ -50,7 +65,7 @@ public class MypageDaoImpl implements MypageDao {
 		orderMap.put("payment", payment);
 		orderMap.put("isbn", isbn);
 		orderMap.put("quantity", quantity);
-		
+
 		sqlSession.insert("OrderList.insertOrder", orderMap);
 	}
 

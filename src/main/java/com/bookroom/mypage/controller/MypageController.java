@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bookroom.book.vo.BookVo;
+import com.bookroom.cart.vo.CartVo;
 import com.bookroom.mypage.service.MypageService;
 import com.bookroom.mypage.vo.MypageVo;
 import com.bookroom.search.service.SearchService;
@@ -25,6 +26,7 @@ public class MypageController {
 	@Autowired
 	private SearchService searchService;
 
+	// 장바구니 이동
 	@RequestMapping("/Cart")
 	public ModelAndView cart(HttpSession session) {
 
@@ -34,16 +36,61 @@ public class MypageController {
 			System.out.println("session is null");
 			mv.setViewName("redirect:/Login");
 		} else {
-			String user_id = (String) session.getAttribute("userid");
-			List<MypageVo> userCart = mypageService.cartView(user_id);
-			// String isbn = userCart.get(0).getBookName();
-			mv.addObject("userCart", userCart);
 			mv.setViewName("/mypage/cart");
+		}
+
+		String user_id = (String) session.getAttribute("userid");
+		List<CartVo> userCart = mypageService.cartView(user_id);
+		System.out.println("userCart=" + userCart);
+
+		BookVo book = new BookVo();
+		String bookName = "";
+		String bookImg = "";
+		String auth = "";
+		int bookPrice = 0;
+		String publisher = "";
+		int size = userCart.size();
+
+		for (int i = 0; i < userCart.size(); i++) {
+			String isbn = userCart.get(i).getIsbn();
+			book = searchService.searchBookByISBN(isbn);
+			bookName = book.getTitle();
+			bookImg = book.getImage();
+			bookPrice = Integer.parseInt(book.getPrice());
+			auth = book.getAuthor();
+			publisher = book.getPublisher();
+
+			userCart.get(i).setBookName(bookName);
+			userCart.get(i).setImg(bookImg);
+			userCart.get(i).setPrice(bookPrice);
+			userCart.get(i).setAuth(auth);
+			userCart.get(i).setPublisher(publisher);
+		}
+		mv.addObject("size", size);
+		mv.addObject("userCart", userCart);
+		mv.setViewName("mypage/cart");
+		return mv;
+	}
+
+	// 장바구니 담기
+	@RequestMapping("/InsertCart")
+	public ModelAndView insertCart(HttpSession session, @RequestParam HashMap<String, Object> map) {
+
+		ModelAndView mv = new ModelAndView();
+
+		if (session.getAttribute("userid") == null) {
+			System.out.println("session is null");
+			mv.setViewName("redirect:/Login");
+		} else {
+			map.put("userid", session.getAttribute("userid"));
+			mypageService.insertCart(map);
+			mv.setViewName("redirect:/Mypage/Cart");
 		}
 
 		return mv;
 	}
 
+	// 주문내역
 	@RequestMapping("/OrderList")
 	public ModelAndView orderedList(HttpSession session, @RequestParam HashMap<String, Object> map) {
 
@@ -60,7 +107,8 @@ public class MypageController {
 				List<MypageVo> list = mypageService.getOrderList(userid);
 				mv.addObject("list", list);
 				mv.setViewName("/mypage/orderlist");
-			// 특정기간 조회
+
+				// 특정기간 조회
 			} else {
 				List<MypageVo> list = mypageService.getOrderListByPeriod(map, userid);
 				mv.addObject("list", list);
@@ -68,6 +116,20 @@ public class MypageController {
 				return mv;
 			}
 		}
+		return mv;
+	}
+
+	// 장바구니 삭제
+	@RequestMapping("/Delete")
+	public ModelAndView deleteCart(HttpSession session, @RequestParam HashMap<String, Object> map) {
+
+		ModelAndView mv = new ModelAndView();
+
+		String userid = (String) session.getAttribute("userid");
+		;
+		int userCart = mypageService.deleteCart(map, userid);
+		mv.setViewName("redirect:/Mypage/Cart");
+
 		return mv;
 	}
 
@@ -89,16 +151,17 @@ public class MypageController {
 
 		return mv;
 	}
-	
+
 	@RequestMapping("/PayComplete")
-	public ModelAndView payComplete(HttpSession session, String zipcode, String address, String payment, String isbn, String quantity) {
-		
+	public ModelAndView payComplete(HttpSession session, String zipcode, String address, String payment, String isbn,
+			String quantity) {
+
 		ModelAndView mv = new ModelAndView();
-		
-		mypageService.insertOrder((String)session.getAttribute("userid"), zipcode, address, payment, isbn, quantity);
-		
+
+		mypageService.insertOrder((String) session.getAttribute("userid"), zipcode, address, payment, isbn, quantity);
+
 		mv.setViewName("redirect:/");
-		
+
 		return mv;
 	}
 }

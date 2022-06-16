@@ -9,10 +9,15 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
+	#main {
+		position: relative;
+		width: 1700px;
+	}
+	
 	#div_submit {
 	width:50%;
 	position:absolute;
-    left:33%;
+    left:350px;
     white-space: nowrap;
 	}
 	
@@ -23,9 +28,8 @@
 	#tbl_list {
 		width : 80%;
 		height: 80%;
-		margin-left: auto;
-		margin-right: auto;
-		margin-top : 5%;
+		margin-left: 50px;
+		margin-top : 130px;
 		border: 3px solid #CCCCCC;
 		border-collapse : collapse;
 	}
@@ -64,7 +68,8 @@
 			let lastweek   = new Date(+new Date(year, month-1, day-7) + 3240 * 10000).toISOString().split("T")[0];
 			let lastmonth  = new Date(+new Date(year, month-2, day) + 3240 * 10000).toISOString().split("T")[0];
 			let last3month = new Date(+new Date(year, month-4, day) + 3240 * 10000).toISOString().split("T")[0];
-
+			let alltime    = new Date(+new Date(year-10, month, day) + 3240 * 10000).toISOString().split("T")[0];
+			
 			if (day < 10) {
 				day = '0' + day;				
 			}
@@ -79,6 +84,7 @@
 			case 'one_week'   : startel.value = lastweek;   break;
 			case 'one_month'  : startel.value = lastmonth;  break;
 			case 'three_month': startel.value = last3month; break;
+			case 'all_time'   : startel.value = alltime;    break;
 			}
 			
 			forms.action = "/Mypage/OrderList";

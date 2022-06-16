@@ -28,8 +28,12 @@
           AND ORDER_TB.ORDER_DATE &lt;= #{end_date} 
     </select>
     
+    <insert id="InsertCart">
+    	INSERT INTO CART_TB 
+    	VALUES(#{userid}, #{isbn}, #{quantity})
+    </insert>
+    
     <insert id="insertOrder">
-    	<!-- set @orderId := (SELECT NVL(MAX(ORDER_ID), 0) + 1 FROM ORDER_TB); -->
     	BEGIN
 	    	INSERT INTO ORDER_TB 
 	    	VALUES
