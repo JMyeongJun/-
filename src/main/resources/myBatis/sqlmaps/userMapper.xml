@@ -36,4 +36,11 @@
     			dummy.BIRTHYEAR
     		)
     </insert>
+    
+    <!-- 유저 조회 -->
+    <select id="UserSelect" resultType="com.bookroom.mypage.vo.MypageVo">
+    SELECT ISBN, QUANTITY
+		FROM CART_TB
+		WHERE USER_ID=#{user_id}
+    </select>
 </mapper>
