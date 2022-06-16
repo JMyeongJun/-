@@ -10,25 +10,6 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-   $(function(){
-      // 로그인버튼 관련
-      if("${username}" != "") {
-         $("#login").attr("href", "/Login/Logout");
-         $("#login button").html("로그아웃");
-      }
-      
-      // 검색창 submit 제한
-      $("#searchForm").submit(function(event){
-         var keyword = $("#keyword").val();
-         if(keyword == ""){
-            alert("검색어를 입력하세요.");
-            event.preventDefault();
-            return;
-         }
-      });
-   });
-   
- 
    // 수량 변경에 따른 가격표시
    function count(index,type)  {
 
@@ -199,21 +180,11 @@ input::-webkit-inner-spin-button {
 <body>
    <div id="container">
       <div id="sidenav">
-         <div id="side_top">
-            <a href="/Login" id="login"><button>로그인</button></a> <a
-               href="/Mypage/Cart"><button>장바구니</button></a> <a
-               href="/Mypage/OrderList"><button>주문내역</button></a>
-            <c:choose>
-               <c:when test="${username != null}">
-                  <div id="printname" style="text-align: center;">${username}님</div>
-               </c:when>
-            </c:choose>
-         </div>
+         <div id="side_top"><%@ include file="/WEB-INF/include/sideTop.jsp" %></div>
          <div id="side_bottom">
             <ul id="categoryList">
                <li><a href="/Mypage/Cart" class="active">장바구니</a></li>
                <li><a href="/Mypage/OrderList">주문내역</a></li>
-               <li><a href="/Mypage/Pay">결제</a></li>
             </ul>
          </div>
       </div>
@@ -221,22 +192,12 @@ input::-webkit-inner-spin-button {
          <h1>
             <a href="/">책방</a>
          </h1>
-         <div id="top_bottom">
-            <form action="/Search" id="searchForm">
-               <select name="searchOption">
-                  <option value="all">통합검색</option>
-                  <option value="title">제목검색</option>
-                  <option value="auth">저자검색</option>
-               </select> <input type="hidden" name="pageNum" value="1" /> <input
-                  type="text" name="keyword" id="keyword" autocomplete='off'
-                  placeholder="검색" /> <input type="submit" class="btnOk" value="검색" />
-            </form>
-         </div>
+         <div id="top_bottom"><%@ include file="/WEB-INF/include/topBottom.jsp" %></div>
       </div>
       <div id="main">
          <h2>${username}cart</h2>
          <table>
-            <form action="/Mypage/PayCart" id="movePayForm">
+            <form action="/Mypage/Pay?cart=true" id="movePayForm">
                <th colspan="2">상품</th>
                <th>상품 금액</th>
                <th>수량</th>
@@ -263,6 +224,7 @@ input::-webkit-inner-spin-button {
                      <td id="total${status.index}"></td>
                      <td><a href="/Mypage/Delete?isbn=${userCart.isbn}"id="btnDelete">삭제</a></td>
                      <input type="hidden" name="isbn" value="${userCart.isbn}" />
+                     <input type="hidden" name="cart" value="true" />
                      <input type="hidden" name="quantity"
                         id="subQuantity${status.index}" value="" />
                   </tr>

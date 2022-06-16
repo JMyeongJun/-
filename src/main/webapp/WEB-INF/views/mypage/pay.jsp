@@ -19,10 +19,6 @@
 		IMP.init("imp19543974");
 	}
 	
-	function btn(){
-		alert(getAddress());
-	}
-	
 	function getTimeStamp(){
 		var now = new Date();
 		var hours = now.getHours();
@@ -44,12 +40,17 @@
 	
 	// 결제
   function requestPay() {
+	  if($('#postcode').val() == ''){
+			alert('주소를 입력하세요.');
+			return
+		}
+		
 	  // IMP.request_pay(param, callback) 결제창 호출
 	  IMP.request_pay({ // param
       pg: "html5_inicis",
       pay_method: "card",
       merchant_uid: getTimeStamp(), // 같으면 안됨
-      name: "${book.title}",
+      name: document.querySelector('#bookTitle').innerHTML,
       amount: "${totalPrice}", // 가격
       buyer_email: "${email}",
       buyer_name: "${username}",
@@ -61,18 +62,7 @@
           /* ...,
           // 결제 성공 시 로직,
           ... */
-          alert('결제완');
-          var form = document.createElement('form');
-          form.setAttribute('method', 'post');
-          form.setAttribute('action', '/Mypage/PayComplete');
-					form.append('<input type="hidden" name="zipcode" value=$("#postcode").val() />');
-					form.append('<input type="hidden" name="address" value=getAddress() />');
-					form.append('<input type="hidden" name="payment" value="${totalPrice}" />');
-					form.append('<input type="hidden" name="isbn" value="${book.isbn}" />');
-					form.append('<input type="hidden" name="quantity" value="${quantity}" />');
-					
-					document.body.appendChild(form);
-					form.submit();
+    	  	requestPaySuccess();
       } else {
          /*  ...,
           // 결제 실패 시 로직,
@@ -83,12 +73,7 @@
 	}
 	
 	////////////////////////////////////////////////////
-	function requestPayTest() {
-		
-		if($('#postcode').val() == ''){
-			alert('주소를 입력하세요.');
-			return
-		}
+	function requestPaySuccess() {
 		
     var form = document.createElement('form');
     form.setAttribute('method', 'post');
@@ -106,10 +91,11 @@
 		for(var i = 0; i < quantity.length; i++){
     	input += '<input type="hidden" name="quantity" value="' + quantity[i].value + '" />';
 		}
+		input += '<input type="hidden" name="cart" value="${cart}" />';
 		form.innerHTML = input;
 		
 		document.body.appendChild(form);
-		alert('결제완');
+		alert('결제완료');
 		form.submit();
 	}
 	//////////////////////////////////////////////////////////////
@@ -186,7 +172,7 @@
 						%>
 						<tr>
 							<td><img src="${book.image }" alt="" /></td>
-							<td>${book.title }</td>
+							<td id="bookTitle">${book.title }</td>
 							<td>${quantityList[status.index]}</td>
 							<td>${book.price } 원</td>
 							<td><%= bookTotalPrice %> 원</td>
@@ -198,15 +184,15 @@
 				<hr />
 				<div id="postnPay">
 					<div id="postSearch">
-						<input type="text" id="postcode" placeholder="우편번호">
+						<input type="text" id="postcode" placeholder="우편번호" readonly>
 						<input type="button" class="btn" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
-						<input type="text" id="address" placeholder="주소"><br />
-						<input type="text" id="extraAddress" placeholder="참고항목"><br />
+						<input type="text" id="address" placeholder="주소" readonly><br />
+						<input type="text" id="extraAddress" placeholder="참고항목" readonly><br />
 						<input type="text" id="detailAddress" placeholder="상세주소">
 					</div>
 					<div id="pay">
 						<p id="totalPrice">최종 결제금액: ${totalPrice} 원</p>
-						<input type="button" onclick="requestPayTest()" id="payBtn" class="btn" value="결제">
+						<input type="button" onclick="requestPay()" id="payBtn" class="btn" value="결제">
 					</div>
 				</div>
 				<hr />

@@ -93,24 +93,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="/js/categoryList.js"></script>
 <script>
-	$(function(){
-		// 로그인버튼 관련
-		if("${username}" != "") {
-			$("#login").attr("href", "/Login/Logout");
-			$("#login button").html("로그아웃");
-		}
-		
-		// 검색창 submit 제한
-		$("#searchForm").submit(function(event){
-			var keyword = $("#keyword").val();
-			if(keyword == ""){
-				alert("검색어를 입력하세요.");
-				event.preventDefault();
-				return;
-			}
-		});
-	});
-	
 	// 책 상세 페이지 수량 조절 함수
 	function count(type)  {
 
@@ -142,7 +124,7 @@
                document.getElementById("popup_layer").style.display = "block";
                break;
             } 
-			case 'buy'     : location.href = "/Mypage/PayCart?isbn=${book.isbn}&quantity=" + num; break;
+			case 'buy'     : location.href = "/Mypage/Pay?isbn=${book.isbn}&quantity=" + num; break;
 			case 'confirm' : location.href = "/Mypage/InsertCart?isbn=${book.isbn}&quantity=" + num;   break;
 		}
 	}
@@ -160,33 +142,14 @@
 <body>
 	<div id="container">
 		<div id="sidenav">
-			<div id="side_top">
-				<a href="/Login" id="login"><button>로그인</button></a>
-				<a href="/Mypage/Cart"><button>장바구니</button></a>
-				<a href="/Mypage/OrderList"><button>주문내역</button></a>
-				<c:choose>
-					<c:when test="${username != null}">
-						<div id="printname"  style="text-align:center;">${username}님</div>
-			    </c:when>
-				</c:choose>
-			</div>
+			<div id="side_top"><%@ include file="/WEB-INF/include/sideTop.jsp" %></div>
 			<div id="side_bottom">
 				<ul id="sideList"></ul>
 			</div>
 		</div>
 		<div id="top">
 			<h1><a href="/">책방</a></h1>
-			<div id="top_bottom">
-				<form action="/Search" id="searchForm">
-					<select name="searchOption" >
-					  <option value="all">통합검색</option>
-					  <option value="title">제목검색</option>
-					  <option value="auth">저자검색</option>
-				  </select>
-				  <input type="text" name="keyword" id="keyword" autocomplete='off' placeholder="검색" />
-				  <input type="submit" class="btnOk" value="검색" />
-				</form>
-			</div>
+			<div id="top_bottom"><%@ include file="/WEB-INF/include/topBottom.jsp" %></div>
 		</div>
 		<div id="main">
 				<div class="picturebox">

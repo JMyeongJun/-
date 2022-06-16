@@ -1,7 +1,6 @@
 package com.bookroom.mypage.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -134,7 +133,8 @@ public class MypageController {
 	}
 
 	@RequestMapping("/Pay")
-	public ModelAndView pay(HttpSession session, String isbn, String quantity) {
+	public ModelAndView pay(HttpSession session, @RequestParam(value = "isbn") String[] isbnList,
+			@RequestParam(value = "quantity") String[] quantityList, String cart) {
 
 		ModelAndView mv = new ModelAndView();
 
@@ -142,65 +142,47 @@ public class MypageController {
 			System.out.println("session is null");
 			mv.setViewName("redirect:/Login");
 			return mv;
-		} else {
-			BookVo book = searchService.searchBookByISBN(isbn);
-			mv.addObject("book", book);
-			mv.addObject("quantity", quantity);
-			mv.addObject("totalPrice", Integer.parseInt(book.getPrice()) * Integer.parseInt(quantity));
-			mv.setViewName("/mypage/pay");
 		}
 
-		return mv;
-	}
-
-	@RequestMapping("/PayCart")
-	public ModelAndView payCart(HttpSession session, @RequestParam(value = "isbn") String[] isbnList, @RequestParam(value = "quantity") String[] quantityList) {
-
-		ModelAndView mv = new ModelAndView();
-
-		if (session.getAttribute("userid") == null) {
-			System.out.println("session is null");
-			mv.setViewName("redirect:/Login");
-		}
-		
 		List<BookVo> bookList = new ArrayList<BookVo>();
 		int totalPrice = 0;
-		
+
 		for (int i = 0; i < isbnList.length; i++) {
 			BookVo book = searchService.searchBookByISBN(isbnList[i]);
 			bookList.add(book);
-			
+
 			totalPrice += Integer.parseInt(book.getPrice()) * Integer.parseInt(quantityList[i]);
 		}
 
 		mv.addObject("bookList", bookList);
 		mv.addObject("quantityList", quantityList);
 		mv.addObject("totalPrice", totalPrice);
-		
-		mv.setViewName("/mypage/pay2");
+		if (cart != null) {
+			if (!cart.equals("")) {
+				mv.addObject("cart", cart);
+			}
+		}
+
+		mv.setViewName("/mypage/pay");
 
 		return mv;
 	}
 
 	@RequestMapping("/PayComplete")
-	public ModelAndView payComplete(HttpSession session, String zipcode, String address, String payment, String[] isbn, String[] quantity) {
+	public ModelAndView payComplete(HttpSession session, String zipcode, String address, String payment, String[] isbn,
+			String[] quantity, String cart) {
 
 		ModelAndView mv = new ModelAndView();
-		
-		mypageService.insertOrder2((String)session.getAttribute("userid"), zipcode, address, payment, isbn, quantity);
-		
+
+		mypageService.insertOrder((String) session.getAttribute("userid"), zipcode, address, payment, isbn, quantity);
+		if (cart != null) {
+			if (!cart.equals("")) {
+				mypageService.deleteCartAll((String) session.getAttribute("userid"));
+			}
+		}
+
 		mv.setViewName("redirect:/");
 		return mv;
 	}
-	
-//	@RequestMapping("/PayComplete")
-//	public ModelAndView payComplete(HttpSession session, String zipcode, String address, String payment, String isbn, String quantity) {
-//		
-//		ModelAndView mv = new ModelAndView();
-//		
-//		mypageService.insertOrder((String)session.getAttribute("userid"), zipcode, address, payment, isbn, quantity);
-//		
-//		mv.setViewName("redirect:/");
-//		return mv;
-//	}
+
 }

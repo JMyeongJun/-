@@ -37,6 +37,7 @@
 	width: 140px;
 }
 #address, #extraAddress, #detailAddress { width: 300px;}
+#postcode, #address, #extraAddress {background-color: #ddd;}
 #pay{
 	width: 60%;
 	display: flex;

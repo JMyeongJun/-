@@ -49,4 +49,9 @@
     	WHERE USER_ID = #{userid} 
      	AND ISBN = #{isbn}  
   	</delete>
+  	
+  	<delete id="deleteCartAll">
+  		DELETE FROM CART_TB
+    	WHERE USER_ID = #{userid} 
+  	</delete>
 </mapper>

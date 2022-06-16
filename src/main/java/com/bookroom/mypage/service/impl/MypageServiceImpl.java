@@ -73,15 +73,14 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
-	public void insertOrder(String userid, String zipcode, String address, String payment, String isbn,
-			String quantity) {
+	public void insertOrder(String userid, String zipcode, String address, String payment, String[] isbn,
+			String[] quantity) {
 		dao.insertOrder(userid, zipcode, address, payment, isbn, quantity);
 	}
 
 	@Override
-	public void insertOrder2(String userid, String zipcode, String address, String payment, String[] isbn,
-			String[] quantity) {
-		dao.insertOrder2(userid, zipcode, address, payment, isbn, quantity);
+	public void deleteCartAll(String userid) {
+		dao.deleteCartAll(userid);
 	}
 
 }

@@ -41,8 +41,8 @@ public class SearchServiceImpl implements SearchService {
 		String apiURL = null;
 
 		// 검색옵션 + 검색어
-		System.out.println("ServiceImpl() Search()= " + "검색어=" + keyword + ", 검색옵션=" + searchOption + ", 정렬옵션="
-				+ sortOption + ", 보여줄 갯수=" + display);
+//		System.out.println("ServiceImpl() Search()= " + "검색어=" + keyword + ", 검색옵션=" + searchOption + ", 정렬옵션="
+//				+ sortOption + ", 보여줄 갯수=" + display);
 
 		switch (searchOption) {
 		case "all":
@@ -67,7 +67,7 @@ public class SearchServiceImpl implements SearchService {
 		// 정렬 옵션
 		apiURL += "&sort=" + sortOption;
 
-		System.out.println("ServiceImpl() searchAPI Url= " + apiURL);
+//		System.out.println("ServiceImpl() searchAPI Url= " + apiURL);
 
 		Map<String, String> requestHeaders = new HashMap<String, String>();
 		requestHeaders.put("X-Naver-Client-Id", clientId);
@@ -105,7 +105,7 @@ public class SearchServiceImpl implements SearchService {
 		String apiURL = "https://openapi.naver.com/v1/search/book_adv?d_isbn=" + query;;
 		// 보여줄 개수
 
-		System.out.println("ServiceImpl() searchAPI Url= " + apiURL);
+//		System.out.println("ServiceImpl() searchAPI Url= " + apiURL);
 
 		Map<String, String> requestHeaders = new HashMap<String, String>();
 		requestHeaders.put("X-Naver-Client-Id", clientId);
@@ -114,7 +114,7 @@ public class SearchServiceImpl implements SearchService {
 
 		// json response
 		String responseBody = get(apiURL, requestHeaders);
-		System.out.println(responseBody);
+//		System.out.println(responseBody);
 		// json -> object
 		ObjectMapper om = new ObjectMapper();
 		SearchVo vo = null;
