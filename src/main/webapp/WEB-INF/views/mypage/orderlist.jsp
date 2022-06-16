@@ -94,7 +94,6 @@
 				<ul id="sideList">
 					<li><a href="/Mypage/Cart">장바구니</a></li>
 					<li><a href="/Mypage/Orderlist" class="active">주문내역</a></li>
-					<li><a href="/Mypage/Pay">결제</a></li>
 				</ul>
 			</div>
 		</div>

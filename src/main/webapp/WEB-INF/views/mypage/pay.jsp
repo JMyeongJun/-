@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/css/basic.css" />
+<link rel="stylesheet" href="/css/pay.css" />
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- iamport.payment.js -->
@@ -151,7 +152,6 @@
 				<ul id="sideList">
 					<li><a href="/Mypage/Cart">장바구니</a></li>
 					<li><a href="/Mypage/OrderList">주문내역</a></li>
-					<li><a href="#" class="active">결제</a></li>
 				</ul>
 			</div>
 		</div>
@@ -160,9 +160,8 @@
 			<div id="top_bottom"><%@ include file="/WEB-INF/include/topBottom.jsp" %></div>
 		</div>
 		<div id="main">
-			<h2>결제</h2>
 			<div id="pay_main">
-				<table>
+				<table id="bookTable">
 					<tr>
 						<th colspan="2">상품</th>
 						<th>수량</th>
@@ -178,16 +177,20 @@
 					</tr>
 				</table>
 				<hr />
-				<p>최종 결제금액: ${totalPrice} 원</p>
+				<div id="postnPay">
+					<div id="postSearch">
+						<input type="text" id="postcode" placeholder="우편번호">
+						<input type="button" class="btn" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
+						<input type="text" id="address" placeholder="주소"><br />
+						<input type="text" id="extraAddress" placeholder="참고항목"><br />
+						<input type="text" id="detailAddress" placeholder="상세주소">
+					</div>
+					<div id="pay">
+						<p id="totalPrice">최종 결제금액: ${totalPrice} 원</p>
+						<input type="button" onclick="requestPayTest()" id="payBtn" class="btn" value="결제">
+					</div>
+				</div>
 				<hr />
-				<input type="text" id="postcode" placeholder="우편번호" value="46054">
-				<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
-				<input type="text" id="address" placeholder="주소" value="부산 기장군 기장읍 차성로461"><br>
-				<input type="text" id="detailAddress" placeholder="상세주소" value="102동 1502호">
-				<input type="text" id="extraAddress" placeholder="참고항목" value="(이진캐스빌블루1차아파트)">
-				<hr />
-				<input type="button" onclick="requestPayTest()" id="PayBtn" value="결제"><hr />
-				<button onclick="btn()">누름</button>
 			</div>
 		</div>
 	</div>

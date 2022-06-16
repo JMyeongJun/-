@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/css/basic.css" />
-<link rel="stylesheet" href="/css/searchListMain.css" />
+<link rel="stylesheet" href="/css/searchList.css" />
 <link rel="stylesheet" href="/css/pagination.css" />
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

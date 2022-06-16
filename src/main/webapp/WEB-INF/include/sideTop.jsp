@@ -16,6 +16,6 @@ $(function(){
 <a href="/Mypage/OrderList"><button>주문내역</button></a>
 <c:choose>
 	<c:when test="${username != null}">
-		<div id="printname"  style="text-align:center;">${username}님</div>
+		<div id="printname"  style="text-align:center; color: white;">${username}님</div>
    </c:when>
 </c:choose>
