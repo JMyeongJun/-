@@ -30,155 +30,187 @@
    
  
    // 수량 변경에 따른 가격표시
-	function count(index,type)  {
+   function count(index,type)  {
 
-		  let quantityEl    = document.getElementById('bookQuantityCnt' + index);
-		  let priceEl       = document.getElementById('bookPrice'+ index);
-		  let priceSumEl    = document.getElementById('total' + index);
-		  let totalEl       = document.getElementById('totalPrice');
-		 
-		  let quantity      = quantityEl.value;
-		  let price         = parseInt(priceEl.innerHTML); 
-		  let totalPrice    = parseInt(totalEl.innerHTML);
-		  
-		  if(type == 1) {
-			  quantity = parseInt(quantity) + 1;
-			  totalPrice +=  price;
-		  }else if(type == -1 && quantity > 0)  {
-			  quantity = parseInt(quantity) - 1;
-			  totalPrice -=  price;
-		    	if(quantity <=0) {
-		    		quantity = 0;	    		
-		    	}
-		  } 
+        let quantityEl    = document.getElementById('bookQuantityCnt' + index);
+        let priceEl       = document.getElementById('bookPrice'+ index);
+        let priceSumEl    = document.getElementById('total' + index);
+        let totalEl       = document.getElementById('totalPrice');
+       
+        let quantity      = quantityEl.value;
+        let price         = parseInt(priceEl.innerHTML); 
+        let totalPrice    = parseInt(totalEl.innerHTML);
+        console.log(totalPrice);
+        
+        if(type == 1) {
+           quantity = parseInt(quantity) + 1;
+           totalPrice +=  price;
+        }else if(type == -1 && quantity > 0)  {
+           quantity = parseInt(quantity) - 1;
+           totalPrice -=  price;
+             if(quantity <=0) {
+                quantity = 0;             
+             }
+        } 
 
-		  quantityEl.value     = quantity;
-		  priceSumEl.innerHTML = quantity * price;
-		  totalEl.innerHTML = totalPrice;
-	}
-		  
-	
+        quantityEl.value     = quantity;
+        priceSumEl.innerHTML = quantity * price + '원';
+        totalEl.innerHTML = totalPrice + '원';
+   }
+        
+   
    // 초기화면 가격표시
-	$(function(){
-	 	 let size       = ${size};
-	 	 let totalEl    = document.getElementById('totalPrice');
-	 	 let totalPrice = 0;
+   $(function(){
+        let size       = ${size};
+        let totalEl    = document.getElementById('totalPrice');
+        let totalPrice = 0;
 
-	 for (var i = 0; i < size; i++) {
-		 let priceEl    = document.getElementById('bookPrice'+ i);
-		 let priceSumEl = document.getElementById('total' + i);
-		 let quantityEl = document.getElementById('bookQuantityCnt' + i);
-	 	 let quantity   = quantityEl.value;
-	 	 let price      = priceEl.innerHTML;
-	 	 let priceSum   = quantity * price;
-	 	 priceSumEl.innerHTML = priceSum;
-	 	 totalPrice += priceSum;
-	  }
-	 
-	 totalEl.innerHTML = totalPrice;
-	})
+    for (var i = 0; i < size; i++) {
+       let priceEl    = document.getElementById('bookPrice'+ i);
+       let priceSumEl = document.getElementById('total' + i);
+       let quantityEl = document.getElementById('bookQuantityCnt' + i);
+        let quantity   = quantityEl.value;
+        let price      = priceEl.innerHTML;
+        let priceSum   = quantity * price;
+        priceSumEl.innerHTML = priceSum + '원';
+        totalPrice += priceSum;
+     }
+    
+    totalEl.innerHTML = totalPrice + '원';
+   })
    
    function movePay() {
-		$("#movePayForm").submit();
-			}
-	
+      
+         let size       = ${size};
+         
+         for (var i = 0; i < size; i++) {
+            let quantityEl = document.getElementById('bookQuantityCnt' + i);
+            let submitQuantityEl = document.getElementById('subQuantity' + i);
+            let quantity   = quantityEl.value;
+            submitQuantityEl.value = quantity;
+         }
+      $("#movePayForm").submit();
+   }
+   
    
 </script>
 
 <style>
 #main {
-width:100%;
+   margin: 0 auto;
+   width: 1100px;
 }
-.hrBar {
-width: 90%;
 
+img {
+   width: 150px;
+   float: left;
+   margin-left: 35px;
+   margin-top: 20px;
+   margin-bottom: 20px;
 }
-#prodInfo {
-padding-left: 175px;
-}
-#prodPrice {
-padding-left: 470px;
-}
-#prodCount {
-padding-left: 250px;
-}
- img{
- width:150px;
- float: left;
- margin-left: 100px;
- margin-top: 20px;
- margin-bottom: 20px;
- }
- #bookInfo {
- width:25%;
- float: left;
- margin-top: 50px;
- margin-left: 10px;
- }
- #bookPrice {
- float: left;
- margin-left: 75px;
- margin-top: 80px;
-}
- #bookQuantityCount {
- float: left;
- }
 
- #bookQuantityCount {
- margin-left: 230px;
- margin-bottom: 50px;
- margin-top: 79px;
- }
- #bookQuantityCnt {
-  width:90px;
-  text-align: center;
- }
- 
- #btnDelete{
- float:left;
- margin-left: 150px;
- margin-top: 79px;
- width:100px;
- height:30px;
- border: 0;
- outline: 0;
- }
- 
- #totalPrice {
- width:200px;
- margin: 0 auto;
- padding-top: 50px;
- padding-bottom: 50px;
- }
- 
- #btnBuy {
- width:200px;
- height:50px;
- margin-left: 620px;
- margin-bottom: 150px;
- background-color: #3498DB;
- border: 0;
- outline: 0;
- color: white;
- border-radius: 20px;
- }
+table {
+   width: 100%;
+   text-align: center;
+   border-collapse: collapse;
+}
+
+th {
+   border-bottom: 2px dashed black;
+   padding: 20px;
+}
+
+tr {
+   border-bottom: 1px solid black;
+   border-top: 1px solid black;
+}
+
+td:nth-child(1) {
+   width: 200px;
+}
+td:nth-child(2) {
+   width: 285px;
+}
+td:nth-child(3) {
+   width: 110px;
+}
+td:nth-child(4) {
+   width: 140px;
+}
+td:nth-child(5) {
+   width: 110px;
+}
+td:nth-child(6) {
+   width: 110px;
+}
+
+td {
+   border-bottom: 1px solid black;
+}
+
+
+input[type=number] {
+   text-align: center;
+   width: 30px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+#totalPrice {
+   margin-top: 20px;
+   margin-bottom: 20px;
+   margin-left:650px;   
+   font-size: 25px;
+   font-weight: bold;
+}
+
+#movePay {
+   background:#3498DB;
+   text-align: center;
+   margin-bottom: 30px;
+   margin-left:650px;   
+   border-radius: 10px;
+   width: 400px;
+}
+
+#main>div>a {
+   display: block;
+   font-size: 20px;
+   color:white;
+   padding: 10px;
+   font-weight: bold;
+}
+
+#bookName {
+   display: block;
+   margin-bottom: 20px;
+   font-weight: bold;
+}
+
+#btnDelete {
+   background-color: #E2E2E2;
+   border-radius: 10px;
+   padding: 10px;
+}
 </style>
 </head>
 <body>
    <div id="container">
       <div id="sidenav">
          <div id="side_top">
-            <a href="/Login" id="login"><button>로그인</button></a>
-            <a href="/Mypage/Cart"><button>장바구니</button></a>
-            <a href="/Mypage/OrderList"><button>주문내역</button></a>
+            <a href="/Login" id="login"><button>로그인</button></a> <a
+               href="/Mypage/Cart"><button>장바구니</button></a> <a
+               href="/Mypage/OrderList"><button>주문내역</button></a>
             <c:choose>
                <c:when test="${username != null}">
-                  <div id="printname"  style="text-align:center;">${username}님</div>
-             </c:when>
+                  <div id="printname" style="text-align: center;">${username}님</div>
+               </c:when>
             </c:choose>
          </div>
          <div id="side_bottom">
-            <ul id="sideList">
+            <ul id="categoryList">
                <li><a href="/Mypage/Cart" class="active">장바구니</a></li>
                <li><a href="/Mypage/OrderList">주문내역</a></li>
                <li><a href="/Mypage/Pay">결제</a></li>
@@ -186,52 +218,59 @@ padding-left: 250px;
          </div>
       </div>
       <div id="top">
-         <h1><a href="/">책방</a></h1>
+         <h1>
+            <a href="/">책방</a>
+         </h1>
          <div id="top_bottom">
             <form action="/Search" id="searchForm">
-               <select name="searchOption" >
-                 <option value="all">통합검색</option>
-                 <option value="title">제목검색</option>
-                 <option value="auth">저자검색</option>
-              </select>
-              <input type="hidden" name="pageNum" value="1" />
-              <input type="text" name="keyword" id="keyword" autocomplete='off' placeholder="검색" />
-              <input type="submit" class="btnOk" value="검색" />
+               <select name="searchOption">
+                  <option value="all">통합검색</option>
+                  <option value="title">제목검색</option>
+                  <option value="auth">저자검색</option>
+               </select> <input type="hidden" name="pageNum" value="1" /> <input
+                  type="text" name="keyword" id="keyword" autocomplete='off'
+                  placeholder="검색" /> <input type="submit" class="btnOk" value="검색" />
             </form>
          </div>
       </div>
       <div id="main">
-         <h2>${username} cart</h2>
-         <hr style="width:90%">
-         <span id="prodInfo">상품</span>
-         <span id="prodPrice">상품금액</span>
-         <span id="prodCount">수량</span> 
-         <span>합계</span> 
-         <form action="/Mypage/Pay" id="movePayForm">
-         <c:forEach var="userCart" items="${ userCart }" varStatus="status">
-            <hr class="hrBar">
-            <div id="bookImage"><img src=${ userCart.img } ></div>
-              <div id="bookInfo">   
-               <div id="bookName">책 이름:${ userCart.bookName }</div>
-               <div id="bookAuth">책 작가:${ userCart.auth }</div>
-               <div id="bookPublisher">책 출판:${ userCart.publisher }</div>
-            </div>
-            <div id="bookPrice${status.index}">${ userCart.price }</div>
-            <div id="bookQuantityCount">
-            	<input type="button" onclick="count(${status.index},-1)" value="-" />						
-         	    <input type="number" id="bookQuantityCnt${status.index}" value="${ userCart.quantity }">
-				<input type="button" onclick="count(${status.index},1)" value="+" />
-            </div>
-            <div id="total${status.index}"></div>
-            <a href="/Mypage/Delete?isbn=${userCart.isbn}" id="btnDelete">삭제</a>
-            <input type="hidden" name="isbn" value="${userCart.isbn}" />
-            <input type="hidden" name="quantity" value="${userCart.quantity}" />
-         </c:forEach>
-         </form>
-         <div style="padding: 100px;">
-         </div>
-         <h2 id="totalPrice"></h2>
-         <a href="javascript:void(0)" onclick="movePay()" style="font-size:30px";>주문하기</a>
+         <h2>${username}cart</h2>
+         <table>
+            <form action="/Mypage/PayCart" id="movePayForm">
+               <th colspan="2">상품</th>
+               <th>상품 금액</th>
+               <th>수량</th>
+               <th>합계</th>
+               <th></th>
+               <c:forEach var="userCart" items="${ userCart }" varStatus="status">
+                  <tr style="border-bottom: 1px solid black;">
+                     <td><img src=${ userCart.img }></td>
+                     <td>
+                        <div id="bookInfo">
+                           <div id="bookName">${ userCart.bookName }</div>
+                           <div id="bookAuth">작가: ${ userCart.auth }</div>
+                           <div id="bookPublisher">출판사: ${ userCart.publisher }</div>
+                        </div>
+                     </td>
+                     <td id="bookPrice${status.index}">${ userCart.price}</td>
+                     <td>
+                        <div id="bookQuantityCount">
+                           <input type="button" onclick="count(${status.index},-1)"value="-" />
+                           <input type="number" id="bookQuantityCnt${status.index}"value="${ userCart.quantity }"> 
+                           <input type="button" onclick="count(${status.index},1)" value="+" />
+                        </div>
+                     </td>
+                     <td id="total${status.index}"></td>
+                     <td><a href="/Mypage/Delete?isbn=${userCart.isbn}"id="btnDelete">삭제</a></td>
+                     <input type="hidden" name="isbn" value="${userCart.isbn}" />
+                     <input type="hidden" name="quantity"
+                        id="subQuantity${status.index}" value="" />
+                  </tr>
+               </c:forEach>
+            </form>
+         </table>
+         <div id="totalPrice"></div>
+         <div id="movePay"><a href="javascript:void(0)" onclick="movePay()">주문하기</a></div>
       </div>
    </div>
 </body>

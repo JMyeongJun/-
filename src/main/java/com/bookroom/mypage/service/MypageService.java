@@ -19,4 +19,6 @@ public interface MypageService {
 	int deleteCart(HashMap<String, Object> map, String userid);
 
 	void insertOrder(String userid, String zipcode, String address, String payment, String isbn, String quantity);
+	
+	void insertOrder2(String userid, String zipcode, String address, String payment, String[] isbn, String[] quantity);
 }

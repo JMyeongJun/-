@@ -135,8 +135,14 @@
 		let   num           = resultElement.value;
 		
 		switch (String) {
-			case 'cart'    : document.getElementById("popup_layer").style.display = "block"; break;
-			case 'buy'     : location.href = "/Mypage/Pay?isbn=${book.isbn}&quantity=" + num; break;
+		case 'cart'    : 
+            if ('${username}'== null || '${username}' == "" ) {
+               location.href = "/Login";  break;
+            } else { 
+               document.getElementById("popup_layer").style.display = "block";
+               break;
+            } 
+			case 'buy'     : location.href = "/Mypage/PayCart?isbn=${book.isbn}&quantity=" + num; break;
 			case 'confirm' : location.href = "/Mypage/InsertCart?isbn=${book.isbn}&quantity=" + num;   break;
 		}
 	}

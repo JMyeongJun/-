@@ -78,4 +78,10 @@ public class MypageServiceImpl implements MypageService {
 		dao.insertOrder(userid, zipcode, address, payment, isbn, quantity);
 	}
 
+	@Override
+	public void insertOrder2(String userid, String zipcode, String address, String payment, String[] isbn,
+			String[] quantity) {
+		dao.insertOrder2(userid, zipcode, address, payment, isbn, quantity);
+	}
+
 }

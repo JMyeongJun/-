@@ -38,9 +38,15 @@
     </insert>
     
     <!-- 유저 조회 -->
-    <select id="UserSelect" resultType="com.bookroom.mypage.vo.MypageVo">
-    SELECT ISBN, QUANTITY
-		FROM CART_TB
-		WHERE USER_ID=#{user_id}
+    <select id="UserSelect" resultType="com.bookroom.cart.vo.CartVo">
+	    SELECT ISBN, QUANTITY
+			FROM CART_TB
+			WHERE USER_ID=#{user_id}
     </select>
+    
+    <delete id="deleteCart">
+   		DELETE FROM CART_TB
+    	WHERE USER_ID = #{userid} 
+     	AND ISBN = #{isbn}  
+  	</delete>
 </mapper>

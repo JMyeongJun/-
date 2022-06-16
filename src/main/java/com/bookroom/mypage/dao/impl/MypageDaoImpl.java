@@ -1,5 +1,6 @@
 package com.bookroom.mypage.dao.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.bookroom.book.vo.BookVo;
 import com.bookroom.cart.vo.CartVo;
 import com.bookroom.mypage.dao.MypageDao;
 import com.bookroom.mypage.vo.MypageVo;
@@ -67,6 +69,24 @@ public class MypageDaoImpl implements MypageDao {
 		orderMap.put("quantity", quantity);
 
 		sqlSession.insert("OrderList.insertOrder", orderMap);
+	}
+
+	@Override
+	public void insertOrder2(String userid, String zipcode, String address, String payment, String[] isbn,
+			String[] quantity) {
+		Map<String, Object> orderMap = new HashMap<String, Object>();
+		orderMap.put("userid", userid);
+		orderMap.put("zipcode", zipcode);
+		orderMap.put("address", address);
+		orderMap.put("payment", payment);
+		
+		sqlSession.insert("OrderList.insertOrder2", orderMap);
+		for(int i = 0; i < isbn.length; i++) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("isbn", isbn[i]);
+			map.put("quantity", quantity[i]);
+			sqlSession.insert("OrderList.insertOrderList", map);
+		}
 	}
 
 }

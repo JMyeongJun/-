@@ -11,9 +11,11 @@ public class BookVo {
 	String pubdate;
 	String isbn;
 	String description;
-	
-	public BookVo() {};
-	
+	String quantity;
+
+	public BookVo() {
+	};
+
 	public BookVo(String title, String link, String image, String author, String price, String discount,
 			String publisher, String pubdate, String isbn, String description) {
 		super();
@@ -109,11 +111,19 @@ public class BookVo {
 		this.description = description;
 	}
 
+	public String getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(String quantity) {
+		this.quantity = quantity;
+	}
+
 	@Override
 	public String toString() {
 		return "BookVo [title=" + title + ", link=" + link + ", image=" + image + ", author=" + author + ", price="
 				+ price + ", discount=" + discount + ", publisher=" + publisher + ", pubdate=" + pubdate + ", isbn="
 				+ isbn + ", description=" + description + "]";
 	}
-	
+
 }

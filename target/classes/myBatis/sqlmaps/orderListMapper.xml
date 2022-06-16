@@ -55,4 +55,27 @@
 	    	);
 	    END;
     </insert>
+    
+    <insert id="insertOrder2">
+    	INSERT INTO ORDER_TB 
+    	VALUES
+    	(
+    		(SELECT NVL(MAX(ORDER_ID), 0) + 1 FROM ORDER_TB), 
+    		#{userid},
+    		#{zipcode},
+    		#{address},
+    		#{payment},
+    		SYSDATE
+    	)
+    </insert>
+    
+    <insert id="insertOrderList">
+    	INSERT INTO ORDERLIST_TB 
+    	VALUES
+    	(
+    		(SELECT NVL(MAX(ORDER_ID), 0) FROM ORDER_TB),
+    		#{isbn},
+    		#{quantity}
+    	)
+    </insert>
 </mapper>

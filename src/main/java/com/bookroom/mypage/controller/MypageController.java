@@ -1,5 +1,7 @@
 package com.bookroom.mypage.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,39 +38,37 @@ public class MypageController {
 			System.out.println("session is null");
 			mv.setViewName("redirect:/Login");
 		} else {
-			mv.setViewName("/mypage/cart");
+
+			String user_id = (String) session.getAttribute("userid");
+			List<CartVo> userCart = mypageService.cartView(user_id);
+
+			BookVo book = new BookVo();
+			String bookName = "";
+			String bookImg = "";
+			String auth = "";
+			int bookPrice = 0;
+			String publisher = "";
+			int size = userCart.size();
+
+			for (int i = 0; i < userCart.size(); i++) {
+				String isbn = userCart.get(i).getIsbn();
+				book = searchService.searchBookByISBN(isbn);
+				bookName = book.getTitle();
+				bookImg = book.getImage();
+				bookPrice = Integer.parseInt(book.getPrice());
+				auth = book.getAuthor();
+				publisher = book.getPublisher();
+
+				userCart.get(i).setBookName(bookName);
+				userCart.get(i).setImg(bookImg);
+				userCart.get(i).setPrice(bookPrice);
+				userCart.get(i).setAuth(auth);
+				userCart.get(i).setPublisher(publisher);
+			}
+			mv.addObject("size", size);
+			mv.addObject("userCart", userCart);
+			mv.setViewName("mypage/cart");
 		}
-
-		String user_id = (String) session.getAttribute("userid");
-		List<CartVo> userCart = mypageService.cartView(user_id);
-		System.out.println("userCart=" + userCart);
-
-		BookVo book = new BookVo();
-		String bookName = "";
-		String bookImg = "";
-		String auth = "";
-		int bookPrice = 0;
-		String publisher = "";
-		int size = userCart.size();
-
-		for (int i = 0; i < userCart.size(); i++) {
-			String isbn = userCart.get(i).getIsbn();
-			book = searchService.searchBookByISBN(isbn);
-			bookName = book.getTitle();
-			bookImg = book.getImage();
-			bookPrice = Integer.parseInt(book.getPrice());
-			auth = book.getAuthor();
-			publisher = book.getPublisher();
-
-			userCart.get(i).setBookName(bookName);
-			userCart.get(i).setImg(bookImg);
-			userCart.get(i).setPrice(bookPrice);
-			userCart.get(i).setAuth(auth);
-			userCart.get(i).setPublisher(publisher);
-		}
-		mv.addObject("size", size);
-		mv.addObject("userCart", userCart);
-		mv.setViewName("mypage/cart");
 		return mv;
 	}
 
@@ -127,7 +127,7 @@ public class MypageController {
 
 		String userid = (String) session.getAttribute("userid");
 		;
-		int userCart = mypageService.deleteCart(map, userid);
+		/* int userCart = */mypageService.deleteCart(map, userid);
 		mv.setViewName("redirect:/Mypage/Cart");
 
 		return mv;
@@ -141,6 +141,7 @@ public class MypageController {
 		if (session.getAttribute("userid") == null) {
 			System.out.println("session is null");
 			mv.setViewName("redirect:/Login");
+			return mv;
 		} else {
 			BookVo book = searchService.searchBookByISBN(isbn);
 			mv.addObject("book", book);
@@ -152,16 +153,54 @@ public class MypageController {
 		return mv;
 	}
 
-	@RequestMapping("/PayComplete")
-	public ModelAndView payComplete(HttpSession session, String zipcode, String address, String payment, String isbn,
-			String quantity) {
+	@RequestMapping("/PayCart")
+	public ModelAndView payCart(HttpSession session, @RequestParam(value = "isbn") String[] isbnList, @RequestParam(value = "quantity") String[] quantityList) {
 
 		ModelAndView mv = new ModelAndView();
 
-		mypageService.insertOrder((String) session.getAttribute("userid"), zipcode, address, payment, isbn, quantity);
+		if (session.getAttribute("userid") == null) {
+			System.out.println("session is null");
+			mv.setViewName("redirect:/Login");
+		}
+		
+		List<BookVo> bookList = new ArrayList<BookVo>();
+		int totalPrice = 0;
+		
+		for (int i = 0; i < isbnList.length; i++) {
+			BookVo book = searchService.searchBookByISBN(isbnList[i]);
+			bookList.add(book);
+			
+			totalPrice += Integer.parseInt(book.getPrice()) * Integer.parseInt(quantityList[i]);
+		}
 
-		mv.setViewName("redirect:/");
+		mv.addObject("bookList", bookList);
+		mv.addObject("quantityList", quantityList);
+		mv.addObject("totalPrice", totalPrice);
+		
+		mv.setViewName("/mypage/pay2");
 
 		return mv;
 	}
+
+	@RequestMapping("/PayComplete")
+	public ModelAndView payComplete(HttpSession session, String zipcode, String address, String payment, String[] isbn, String[] quantity) {
+
+		ModelAndView mv = new ModelAndView();
+		
+		mypageService.insertOrder2((String)session.getAttribute("userid"), zipcode, address, payment, isbn, quantity);
+		
+		mv.setViewName("redirect:/");
+		return mv;
+	}
+	
+//	@RequestMapping("/PayComplete")
+//	public ModelAndView payComplete(HttpSession session, String zipcode, String address, String payment, String isbn, String quantity) {
+//		
+//		ModelAndView mv = new ModelAndView();
+//		
+//		mypageService.insertOrder((String)session.getAttribute("userid"), zipcode, address, payment, isbn, quantity);
+//		
+//		mv.setViewName("redirect:/");
+//		return mv;
+//	}
 }
