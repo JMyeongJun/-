@@ -12,4 +12,6 @@ public interface MypageService {
 	List<MypageVo> cartView(String user_id);
 
 	List<MypageVo> getOrderListByPeriod(HashMap<String, Object> map, String userid);
+	
+	void insertOrder(String userid, String zipcode, String address, String payment, String isbn, String quantity);
 }

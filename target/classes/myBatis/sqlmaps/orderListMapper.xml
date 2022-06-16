@@ -27,4 +27,28 @@
           AND ORDER_TB.ORDER_DATE &gt;= #{start_date} 
           AND ORDER_TB.ORDER_DATE &lt;= #{end_date} 
     </select>
+    
+    <insert id="insertOrder">
+    	<!-- set @orderId := (SELECT NVL(MAX(ORDER_ID), 0) + 1 FROM ORDER_TB); -->
+    	BEGIN
+	    	INSERT INTO ORDER_TB 
+	    	VALUES
+	    	(
+	    		(SELECT NVL(MAX(ORDER_ID), 0) + 1 FROM ORDER_TB), 
+	    		#{userid},
+	    		#{zipcode},
+	    		#{address},
+	    		#{payment},
+	    		SYSDATE
+	    	);
+	    	
+	    	INSERT INTO ORDERLIST_TB 
+	    	VALUES
+	    	(
+	    		(SELECT NVL(MAX(ORDER_ID), 0) FROM ORDER_TB),
+	    		#{isbn},
+	    		#{quantity}
+	    	);
+	    END;
+    </insert>
 </mapper>

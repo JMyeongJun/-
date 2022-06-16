@@ -122,7 +122,7 @@
 		
 		switch (String) {
 			case 'cart': location.href = "/Mypage/Cart?isbn=${book.isbn}&quantity=" + num; break;
-			case 'buy' : location.href = "/Mypage/Buy?isbn=${book.isbn}&quantity=" + num; break;
+			case 'buy' : location.href = "/Mypage/Pay?isbn=${book.isbn}&quantity=" + num; break;
 		}
 	}
 	
