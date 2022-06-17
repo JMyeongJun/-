@@ -82,5 +82,4 @@ public class MypageServiceImpl implements MypageService {
 	public void deleteCartAll(String userid) {
 		dao.deleteCartAll(userid);
 	}
-
 }

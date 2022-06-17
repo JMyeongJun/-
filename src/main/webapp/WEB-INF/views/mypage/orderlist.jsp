@@ -10,33 +10,31 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 	#main {
-		position: relative;
-		width: 1700px;
+		margin: 0 auto;
+		width: 1200px;
 	}
 	
 	#div_submit {
-	width:50%;
-	position:absolute;
-    left:350px;
+	margin: 20px auto;
+	text-align:right;
     white-space: nowrap;
 	}
 	
 	#tbl_submit {
-		margin-top: 2%;
-		margin-left: 0 auto;
+		width: 100%;
 	}
+	
+	#main
 	#tbl_list {
-		width : 80%;
-		height: 80%;
-		margin-left: 50px;
-		margin-top : 130px;
 		border: 3px solid #CCCCCC;
 		border-collapse : collapse;
+		width: 100%;
 	}
 	#tbl_list td, th {
 		text-align: center;
 		border: 1px solid #CCCCCC;
 		border-collapse : collapse;
+		padding : 8px;
 	}
 	#tbl_list th { 
 		background-color: #EAEAEA;
@@ -55,7 +53,7 @@
 	}
 </style>
 <script>
-	$(function(){
+
 		// 이전 기간 날짜 구하는 함수
 		function search_order_history(date) {
 			let forms      = document.getElementById('listForm');
@@ -68,7 +66,7 @@
 			let lastweek   = new Date(+new Date(year, month-1, day-7) + 3240 * 10000).toISOString().split("T")[0];
 			let lastmonth  = new Date(+new Date(year, month-2, day) + 3240 * 10000).toISOString().split("T")[0];
 			let last3month = new Date(+new Date(year, month-4, day) + 3240 * 10000).toISOString().split("T")[0];
-			let alltime    = new Date(+new Date(year-10, month, day) + 3240 * 10000).toISOString().split("T")[0];
+			day = day + 1;
 			
 			if (day < 10) {
 				day = '0' + day;				
@@ -84,12 +82,26 @@
 			case 'one_week'   : startel.value = lastweek;   break;
 			case 'one_month'  : startel.value = lastmonth;  break;
 			case 'three_month': startel.value = last3month; break;
-			case 'all_time'   : startel.value = alltime;    break;
 			}
 			
 			forms.action = "/Mypage/OrderList";
 			forms.submit();
 		};
+		
+		$(function() {   
+	         $('#listForm').on('submit', function(){   
+	               
+	            let startel    = document.querySelector('[name=start_date]').value;   
+	            let endel      = document.querySelector('[name=end_date]').value;   
+	               
+	            if ( startel == '' || endel == '') {   
+	               alert('기간을 모두 선택해주세요');   
+	               return false;   
+	            }   
+	         })   
+	            
+	      })
+
 </script>
 </head>
 <body>
@@ -117,15 +129,16 @@
 					<a href="javascript:search_order_history('one_week')">1주일</a>
 					<a href="javascript:search_order_history('one_month')">1개월</a>
 					<a href="javascript:search_order_history('three_month')">3개월</a>
+					<a href="/Mypage/OrderList">전체</a>
 				</form>
 			</div>
 			<!-- end "div_submit" -->
-			<div>
+			<div  id="div_list">
 				<c:choose>
 					<c:when test="${list != null}">
 						<table id="tbl_list">
 							<tr>
-								<th>주문번호</th>
+								<th style="width:80px;">주문번호</th>
 								<th>주문일자</th>
 								<th>상품명</th>
 								<th>결제금액</th>

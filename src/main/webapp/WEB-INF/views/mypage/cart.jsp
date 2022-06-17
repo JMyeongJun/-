@@ -21,7 +21,6 @@
         let quantity      = quantityEl.value;
         let price         = parseInt(priceEl.innerHTML); 
         let totalPrice    = parseInt(totalEl.innerHTML);
-        console.log(totalPrice);
         
         if(type == 1) {
            quantity = parseInt(quantity) + 1;
@@ -36,9 +35,8 @@
 
         quantityEl.value     = quantity;
         priceSumEl.innerHTML = quantity * price + '원';
-        totalEl.innerHTML = totalPrice + '원';
+        totalEl.innerHTML    = totalPrice + '원';
    }
-        
    
    // 초기화면 가격표시
    $(function(){
@@ -46,23 +44,27 @@
         let totalEl    = document.getElementById('totalPrice');
         let totalPrice = 0;
 
-    for (var i = 0; i < size; i++) {
-       let priceEl    = document.getElementById('bookPrice'+ i);
-       let priceSumEl = document.getElementById('total' + i);
-       let quantityEl = document.getElementById('bookQuantityCnt' + i);
-        let quantity   = quantityEl.value;
-        let price      = priceEl.innerHTML;
-        let priceSum   = quantity * price;
-        priceSumEl.innerHTML = priceSum + '원';
-        totalPrice += priceSum;
-     }
+	    for (var i = 0; i < size; i++) {
+	       let priceEl    = document.getElementById('bookPrice'+ i);
+	       let priceSumEl = document.getElementById('total' + i);
+	       let quantityEl = document.getElementById('bookQuantityCnt' + i);
+	       let quantity   = quantityEl.value;
+	       let price      = priceEl.innerHTML;
+	       let priceSum   = quantity * price;
+	       priceSumEl.innerHTML = priceSum + '원';
+	       totalPrice += priceSum;
+	     }
     
-    totalEl.innerHTML = totalPrice + '원';
+    	totalEl.innerHTML = totalPrice + '원';
    })
    
    function movePay() {
       
          let size       = ${size};
+         
+         if (size == 0) {
+        	 return;
+         }
          
          for (var i = 0; i < size; i++) {
             let quantityEl = document.getElementById('bookQuantityCnt' + i);
@@ -73,9 +75,7 @@
       $("#movePayForm").submit();
    }
    
-   
 </script>
-
 <style>
 #main {
    margin: 0 auto;
@@ -139,16 +139,20 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
-#totalPrice {
+#tot, #totalPrice {
+   display: inline-block;
    margin-top: 20px;
    margin-bottom: 20px;
-   margin-left:650px;   
    font-size: 25px;
    font-weight: bold;
 }
 
+#tot {
+	margin-left:650px;
+}
+
 #movePay {
-   background:#3498DB;
+   background:#C2DED1;
    text-align: center;
    margin-bottom: 30px;
    margin-left:650px;   
@@ -159,7 +163,7 @@ input::-webkit-inner-spin-button {
 #main>div>a {
    display: block;
    font-size: 20px;
-   color:white;
+   color:black;
    padding: 10px;
    font-weight: bold;
 }
@@ -231,6 +235,7 @@ input::-webkit-inner-spin-button {
                </c:forEach>
             </form>
          </table>
+         <div id="tot">총 결제금액: </div>
          <div id="totalPrice"></div>
          <div id="movePay"><a href="javascript:void(0)" onclick="movePay()">주문하기</a></div>
       </div>

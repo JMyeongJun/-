@@ -102,7 +102,7 @@ public class SearchServiceImpl implements SearchService {
 			e.printStackTrace();
 		}
 
-		String apiURL = "https://openapi.naver.com/v1/search/book_adv?d_isbn=" + query;;
+		String apiURL = "https://openapi.naver.com/v1/search/book_adv?d_isbn=" + query;
 		// 보여줄 개수
 
 //		System.out.println("ServiceImpl() searchAPI Url= " + apiURL);

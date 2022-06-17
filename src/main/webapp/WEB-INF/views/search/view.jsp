@@ -10,42 +10,23 @@
 <title>책 상세보기</title>
 <style>
 	#main {
-		position:relative;
+		margin: 0 auto;
 		width: 1000px;
 	}
 	/* 책 이미지 박스 */
 	.picturebox {
-		position: absolute;
-		left : 360px;
-		top  : 5%;
+		width: 300px;
 	}
 	
-	/* 책 이미지 */
-	.itemBookImage{
-	 	display:inline-block;
-		width:200px;
-    	height:280px;
-    	overflow:hidden;
-	}
 	.picture{
-		width:100%;
-	    height:100%;
-	    object-fit:cover;
+		width:80%;
 	}
-	
-	/* 책 정보 박스 */
-	.itembox {
-		display:inline-block;
-	    position: absolute;
-	    top: 5%;
-	    left: 750px;
-		right : 3%;
-	    width: 53%;
-		height: 280px;
+	td, th {
+		border-bottom: 2px dotted #DDD;
 	}
 	
 	tr, td{
-		font-size: 30px;
+		font-size: 21px;
 		padding: 6px;
 		text-align: left;
 	}
@@ -59,27 +40,35 @@
 	}
 	
 	/* 장바구니, 구매 버튼 */
-	#gocart, #gobuy {
-		position: absolute;
-		top: 460px;
-		left: 360px;
+	#bookinfo {
+		display:flex;
+		flex-wrap: nowrap;
+		justify-content: center;
+		margin-bottom: 60px;
 	}
 	
-	#gobuy {
-		margin-left: 450px;
-	
+	#bookinfo * {
+		margin: 20px;
 	}
+	
+	#buttons {
+		text-align: center;
+		margin-bottom: 40px;
+	}
+	
 	.book_a {
 	  	text-align: center;
-	    color: white;
-	    background-color: #3498DB;
+	    color: black;
+	    background-color: #C2DED1;
 	    width : 300px;
-	    float: left;
-	    padding: 10px;
+	    padding: 10px 150px;
+	    margin: 10px 30px;
 	    text-decoration: none;
 	    transition: background-color .3s;
 	    border: 1px solid #ffffff;
 	    border-radius: 5px;
+	    font-size: 23px;
+	    font-weight: bold;
 	}
 	
 /*popup*/
@@ -121,11 +110,21 @@
             if ('${username}'== null || '${username}' == "" ) {
                location.href = "/Login";  break;
             } else { 
+                   let params = '${book.isbn}';
+                   $.ajax({
+                       url: '/Mypage/InsertCart',
+                       type: 'POST',
+                       data: {isbn : params, quantity : num},
+                       contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                       dataType: 'json',
+                       success: function (res) {
+                       }
+                   });
                document.getElementById("popup_layer").style.display = "block";
                break;
             } 
 			case 'buy'     : location.href = "/Mypage/Pay?isbn=${book.isbn}&quantity=" + num; break;
-			case 'confirm' : location.href = "/Mypage/InsertCart?isbn=${book.isbn}&quantity=" + num;   break;
+			case 'confirm' : location.href = "/Mypage/Cart";   break;
 		}
 	}
 
@@ -152,10 +151,9 @@
 			<div id="top_bottom"><%@ include file="/WEB-INF/include/topBottom.jsp" %></div>
 		</div>
 		<div id="main">
+		<div id="bookinfo">
 				<div class="picturebox">
-					<div class="itemBookImage">
 						<img class="picture" src="${book.image}">
-					</div>
 				</div>
 				<div class="itembox">
 					<table>
@@ -183,12 +181,11 @@
 						</tr>
 					</table>
 				</div>
-			<span id="gocart">
-				<a class="book_a" href="javascript:void(0)" onclick="move('cart')">장바구니</a>
-			</span>
-			<span id="gobuy">
-				<a class="book_a" href="javascript:void(0)" onclick="move('buy')">바로구매</a>
-			</span>
+				</div>
+				<div id="buttons">
+					<a class="book_a" href="javascript:void(0)" onclick="move('cart')">장바구니</a>
+					<a class="book_a" href="javascript:void(0)" onclick="move('buy')">바로구매</a>
+				</div>
 		</div>
 	</div>
 	
@@ -201,7 +198,7 @@
 				</div>
 	
 				<div class="popup_btn">
-					<a href="javascript:void(0)" onclick="move('confirm')">장바구니로 이동</a>
+					<a onclick="move('confirm')">장바구니로 이동</a>
 					<a style="left:317px;" href="javascript:closePop();">닫기</a>
 				</div>
 			</div>

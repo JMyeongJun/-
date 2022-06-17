@@ -72,22 +72,25 @@ public class MypageController {
 	}
 
 	// 장바구니 담기
-	@RequestMapping("/InsertCart")
-	public ModelAndView insertCart(HttpSession session, @RequestParam HashMap<String, Object> map) {
+	 @RequestMapping("/InsertCart")
+	   public ModelAndView insertCart(HttpSession session, @RequestParam HashMap<String, Object> map) {
 
-		ModelAndView mv = new ModelAndView();
+	      ModelAndView mv = new ModelAndView();
+	      System.out.println("여기는 인서트:" + map );
 
-		if (session.getAttribute("userid") == null) {
-			System.out.println("session is null");
-			mv.setViewName("redirect:/Login");
-		} else {
-			map.put("userid", session.getAttribute("userid"));
-			mypageService.insertCart(map);
-			mv.setViewName("redirect:/Mypage/Cart");
-		}
+	      if (session.getAttribute("userid") == null) {
+	         System.out.println("session is null");
+	         mv.setViewName("redirect:/Login");
+	      } else {
+	         if(map.get("confirm") == null) {
+	         map.put("userid", session.getAttribute("userid"));
+	         mypageService.insertCart(map);
+	         }
+	         mv.setViewName("redirect:/Mypage/Cart");
+	      }
 
-		return mv;
-	}
+	      return mv;
+	   }
 
 	// 주문내역
 	@RequestMapping("/OrderList")

@@ -39,6 +39,7 @@ a {
 	display: block;
 	text-decoration: none;
 	padding: 10px;
+	color: #D3D3E3;
 }
 #side_bottom li a:hover:not(.active) {
   background-color: rgba(73, 86, 109);
