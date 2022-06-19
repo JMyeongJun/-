@@ -7,20 +7,9 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/css/basic.css" />
 <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
-<title>Insert title here</title>
+<title>책방</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-window.onpageshow = function(event) { 
-	// Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우
-	if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
-		//세션 아이디가 없을경우
-		if(sessionStorage.getItem("userid") == null || sessionStorage.getItem("userid") == ''){
-			window.location.reload (true)
-		}
-	}
-	
-	sessionStorage.setItem("userid", '${userid}');
-}
    // 수량 변경에 따른 가격표시
    function count(index,type)  {
 
@@ -42,7 +31,7 @@ window.onpageshow = function(event) { 
              if(quantity <=0) {
                 quantity = 0;             
              }
-        } 
+        }
 
         quantityEl.value     = quantity;
         priceSumEl.innerHTML = quantity * price + '원';

@@ -34,7 +34,6 @@ public class MypageController {
 		ModelAndView mv = new ModelAndView();
 
 		if (session.getAttribute("userid") == null) {
-			System.out.println("userid is null");
 			mv.setViewName("redirect:/Login");
 		} else {
 
@@ -79,7 +78,6 @@ public class MypageController {
 	      System.out.println("여기는 인서트:" + map );
 
 	      if (session.getAttribute("userid") == null) {
-	         System.out.println("userid is null");
 	         mv.setViewName("redirect:/Login");
 	      } else {
 	         if(map.get("confirm") == null) {
@@ -99,7 +97,6 @@ public class MypageController {
 		ModelAndView mv = new ModelAndView();
 
 		if (session.getAttribute("userid") == null) {
-			System.out.println("userid is null");
 			mv.setViewName("redirect:/Login");
 		} else {
 			String userid = (String) session.getAttribute("userid");
@@ -142,7 +139,6 @@ public class MypageController {
 		ModelAndView mv = new ModelAndView();
 
 		if (session.getAttribute("userid") == null) {
-			System.out.println("userid is null");
 			mv.setViewName("redirect:/Login");
 			return mv;
 		}

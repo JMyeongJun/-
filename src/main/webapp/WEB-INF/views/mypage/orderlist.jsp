@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/css/basic.css" />
-<title>Insert title here</title>
+<title>책방</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 	#main {
@@ -53,17 +53,6 @@
 	}
 </style>
 <script>
-window.onpageshow = function(event) { 
-	// Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우
-	if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
-		//세션 아이디가 없을경우
-		if(sessionStorage.getItem("userid") == null || sessionStorage.getItem("userid") == ''){
-			window.location.reload (true)
-		}
-	}
-	
-	sessionStorage.setItem("userid", '${userid}');
-}
 		// 이전 기간 날짜 구하는 함수
 		function search_order_history(date) {
 			let forms      = document.getElementById('listForm');
