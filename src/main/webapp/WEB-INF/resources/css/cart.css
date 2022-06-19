@@ -1,0 +1,104 @@
+@charset "UTF-8";
+
+#main {
+   margin: 0 auto;
+   width: 1100px;
+}
+
+img {
+   width: 150px;
+   float: left;
+   margin-left: 35px;
+   margin-top: 20px;
+   margin-bottom: 20px;
+}
+
+table {
+   width: 100%;
+   text-align: center;
+   border-collapse: collapse;
+}
+
+th {
+   border-bottom: 2px dashed black;
+   padding: 20px;
+}
+
+tr {
+   border-bottom: 1px solid black;
+   border-top: 1px solid black;
+}
+
+td:nth-child(1) {
+   width: 200px;
+}
+td:nth-child(2) {
+   width: 285px;
+}
+td:nth-child(3) {
+   width: 110px;
+}
+td:nth-child(4) {
+   width: 140px;
+}
+td:nth-child(5) {
+   width: 110px;
+}
+td:nth-child(6) {
+   width: 110px;
+}
+
+td {
+   border-bottom: 1px solid black;
+}
+
+
+input[type=number] {
+   text-align: center;
+   width: 30px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+#tot, #totalPrice {
+   display: inline-block;
+   margin-top: 20px;
+   margin-bottom: 20px;
+   font-size: 25px;
+   font-weight: bold;
+}
+
+#tot {
+	margin-left:650px;
+}
+
+#movePay {
+   background:#C2DED1;
+   text-align: center;
+   margin-bottom: 30px;
+   margin-left:650px;   
+   border-radius: 10px;
+   width: 400px;
+}
+
+#main>div>a {
+   display: block;
+   font-size: 20px;
+   color:black;
+   padding: 10px;
+   font-weight: bold;
+}
+
+#bookName {
+   display: block;
+   margin-bottom: 20px;
+   font-weight: bold;
+}
+
+#btnDelete {
+   background-color: #E2E2E2;
+   border-radius: 10px;
+   padding: 10px;
+}

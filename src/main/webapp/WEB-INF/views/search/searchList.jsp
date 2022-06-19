@@ -11,17 +11,32 @@
 <link rel="stylesheet" href="/css/pagination.css" />
 <title>책방</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="/js/categoryList.js"></script>
+<!-- <script type="text/javascript" src="/js/categoryList.js"></script> -->
 <script>
 	$(function(){
-		// 선택된 카테고리 찾기
-		$("#sideList li a").each(function(index, item){
-			if(("${keyword}" == item.id) && ("${searchOption}" == "catg")){
-				$("#searchKeyword").html('"' + item.innerHTML + '"');
-				item.className = "active";
-			}
-		});
-		
+		// 카테고리 리스트 가져오기, 선택한 카테고리 표시
+		 $.getJSON('/json/category.json', function(data) {
+				let html = "";
+				
+				for (key in data) {
+					let categoryId = data[key].Column1;
+					let categoryName = data[key].Column2; 
+					
+					if(categoryId.toString().length == 3){
+						html += '<li><a href="/Search?searchOption=catg&keyword=' + categoryId + '" id="' + categoryId + '">' + categoryName + '</a></li>';
+					}
+				}
+				
+				$("#sideList").append(html);
+				
+				$("#sideList li a").each(function(index, item){
+					if(("${keyword}" == item.id)  && ("${searchOption}" == "catg") ){
+						$("#searchKeyword").html('"' + item.innerHTML + '"');
+						item.className = 'active';
+					}
+				});
+			});
+		 
 		// option 선택 반영
 		$("#displayOption").val("${display}").prop("selected", true);
 		$("#sortOption").val("${sortOption}").prop("selected", true);
@@ -44,6 +59,7 @@
 		}
 		pagingHTML += '<button class="btn pagingBtn" onclick="pagingBtn(this)">>></button>';
 		$("#pagingBar").append(pagingHTML);
+		
 	});
 	
 	// pagingBar Btn onclick()

@@ -7,78 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/css/basic.css" />
+<link rel="stylesheet" href="/css/view.css" />
 <title>책방</title>
-<style>
-	#main {
-		margin: 0 auto;
-		width: 1000px;
-	}
-	/* 책 이미지 박스 */
-	.picturebox {
-		width: 300px;
-	}
-	
-	.picture{
-		width:80%;
-	}
-	td, th {
-		border-bottom: 2px dotted #DDD;
-	}
-	
-	tr, td{
-		font-size: 21px;
-		padding: 6px;
-		text-align: left;
-	}
-	
-	/* 수량 표시 텍스트 */
-	#amount {
-		width : 50px;
-		height : 30px;
-		margin : 0px 10px 0px 10px;
-		text-align: center;
-	}
-	
-	/* 장바구니, 구매 버튼 */
-	#bookinfo {
-		display:flex;
-		flex-wrap: nowrap;
-		justify-content: center;
-		margin-bottom: 60px;
-	}
-	
-	#bookinfo * {
-		margin: 20px;
-	}
-	
-	#buttons {
-		text-align: center;
-		margin-bottom: 40px;
-	}
-	
-	.book_a {
-	  	text-align: center;
-	    color: black;
-	    background-color: #C2DED1;
-	    width : 300px;
-	    padding: 10px 150px;
-	    margin: 10px 30px;
-	    text-decoration: none;
-	    transition: background-color .3s;
-	    border: 1px solid #ffffff;
-	    border-radius: 5px;
-	    font-size: 23px;
-	    font-weight: bold;
-	}
-	
-/*popup*/
-.popup_layer {position:fixed;top:0;left:0;z-index: 10000; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); }
-.popup_box{position: relative;top:50%;left:50%; overflow: auto; height: 375px; width:600px;transform:translate(-50%, -50%);z-index:1002;box-sizing:border-box;background:#fff;box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);-webkit-box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);-moz-box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);}
-.popup_box .popup_cont {padding:50px;line-height:1.4rem;font-size:30px; text-align: center; }
-.popup_btn { position:relative; height:70px; margin-top:80px;}
-.popup_btn a {position:absolute; left:33px; width:250px; background:#3498DB; text-align: center;  padding-top: 24px; padding-bottom:24px; border-radius: 10px; font-size:20px; color:white;}
-/*popup end*/
-</style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="/js/categoryList.js"></script>
 <script>
@@ -132,11 +62,7 @@
 	function closePop() {
 	    document.getElementById("popup_layer").style.display = "none";
 	}
-	
 </script>
-<style>
-	.active {background-color: yellow;}
-</style>
 </head>
 <body>
 	<div id="container">

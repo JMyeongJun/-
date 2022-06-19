@@ -6,52 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/css/basic.css" />
+<link rel="stylesheet" href="/css/orderlist.css" />
 <title>책방</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<style>
-	#main {
-		margin: 0 auto;
-		width: 1200px;
-	}
-	
-	#div_submit {
-	margin: 20px auto;
-	text-align:right;
-    white-space: nowrap;
-	}
-	
-	#tbl_submit {
-		width: 100%;
-	}
-	
-	#main
-	#tbl_list {
-		border: 3px solid #CCCCCC;
-		border-collapse : collapse;
-		width: 100%;
-	}
-	#tbl_list td, th {
-		text-align: center;
-		border: 1px solid #CCCCCC;
-		border-collapse : collapse;
-		padding : 8px;
-	}
-	#tbl_list th { 
-		background-color: #EAEAEA;
-	}
-	#period a {
-		text-decoration: none;
-		color: black;
-		border: 1px solid black;
-		background-color: #CCCCCC;
-		padding-left: 4px;
-		padding-right: 4px;
-	}
-	#period {
-		margin-left: 10px;
-		margin-right: 10px;
-	}
-</style>
 <script>
 		// 이전 기간 날짜 구하는 함수
 		function search_order_history(date) {

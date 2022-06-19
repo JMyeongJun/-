@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/css/basic.css" />
+<link rel="stylesheet" href="/css/cart.css" />
 <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
 <title>책방</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -76,110 +77,6 @@
    }
    
 </script>
-<style>
-#main {
-   margin: 0 auto;
-   width: 1100px;
-}
-
-img {
-   width: 150px;
-   float: left;
-   margin-left: 35px;
-   margin-top: 20px;
-   margin-bottom: 20px;
-}
-
-table {
-   width: 100%;
-   text-align: center;
-   border-collapse: collapse;
-}
-
-th {
-   border-bottom: 2px dashed black;
-   padding: 20px;
-}
-
-tr {
-   border-bottom: 1px solid black;
-   border-top: 1px solid black;
-}
-
-td:nth-child(1) {
-   width: 200px;
-}
-td:nth-child(2) {
-   width: 285px;
-}
-td:nth-child(3) {
-   width: 110px;
-}
-td:nth-child(4) {
-   width: 140px;
-}
-td:nth-child(5) {
-   width: 110px;
-}
-td:nth-child(6) {
-   width: 110px;
-}
-
-td {
-   border-bottom: 1px solid black;
-}
-
-
-input[type=number] {
-   text-align: center;
-   width: 30px;
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-}
-#tot, #totalPrice {
-   display: inline-block;
-   margin-top: 20px;
-   margin-bottom: 20px;
-   font-size: 25px;
-   font-weight: bold;
-}
-
-#tot {
-	margin-left:650px;
-}
-
-#movePay {
-   background:#C2DED1;
-   text-align: center;
-   margin-bottom: 30px;
-   margin-left:650px;   
-   border-radius: 10px;
-   width: 400px;
-}
-
-#main>div>a {
-   display: block;
-   font-size: 20px;
-   color:black;
-   padding: 10px;
-   font-weight: bold;
-}
-
-#bookName {
-   display: block;
-   margin-bottom: 20px;
-   font-weight: bold;
-}
-
-#btnDelete {
-   background-color: #E2E2E2;
-   border-radius: 10px;
-   padding: 10px;
-}
-</style>
 </head>
 <body>
    <div id="container">
@@ -201,12 +98,14 @@ input::-webkit-inner-spin-button {
       <div id="main">
          <h2>${username}cart</h2>
          <table>
+         	<tr>
+             <th colspan="2">상품</th>
+             <th>상품 금액</th>
+             <th>수량</th>
+             <th>합계</th>
+             <th></th>
+         	</tr>
             <form action="/Mypage/Pay?cart=true" id="movePayForm">
-               <th colspan="2">상품</th>
-               <th>상품 금액</th>
-               <th>수량</th>
-               <th>합계</th>
-               <th></th>
                <c:forEach var="userCart" items="${ userCart }" varStatus="status">
                   <tr style="border-bottom: 1px solid black;">
                      <td><img src=${ userCart.img }></td>
@@ -228,9 +127,7 @@ input::-webkit-inner-spin-button {
                      <td id="total${status.index}"></td>
                      <td><a href="/Mypage/Delete?isbn=${userCart.isbn}"id="btnDelete">삭제</a></td>
                      <input type="hidden" name="isbn" value="${userCart.isbn}" />
-                     <input type="hidden" name="cart" value="true" />
-                     <input type="hidden" name="quantity"
-                        id="subQuantity${status.index}" value="" />
+                     <input type="hidden" name="quantity" id="subQuantity${status.index}" value="" />
                   </tr>
                </c:forEach>
             </form>
