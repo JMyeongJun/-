@@ -13,6 +13,17 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="/js/categoryList.js"></script>
 <script>
+window.onpageshow = function(event) { 
+	// Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우
+	if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+		//세션 아이디가 없을경우
+		if(sessionStorage.getItem("userid") == null || sessionStorage.getItem("userid") == ''){
+			window.location.reload (true)
+		}
+	}
+	
+	sessionStorage.setItem("userid", '${userid}');
+}
 	$(function(){
 		// 선택된 카테고리 찾기
 		$("#sideList li a").each(function(index, item){

@@ -37,7 +37,6 @@ public class LoginController {
 	// 네아로 이동
 	@RequestMapping
 	public String login(Model model, HttpSession session) {
-		System.out.println("로그인/");
 		// 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출
 		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
 		model.addAttribute("url", naverAuthUrl);
@@ -51,8 +50,6 @@ public class LoginController {
 	@RequestMapping(value = "/Callback", method = { RequestMethod.GET, RequestMethod.POST })
 	public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session)
 			throws IOException, ParseException {
-
-		System.out.println("여기는 callback");
 
 		OAuth2AccessToken oauthToken;
 		oauthToken = naverLoginBO.getAccessToken(session, code, state);
@@ -84,6 +81,8 @@ public class LoginController {
 		session.setAttribute("age", age);
 		session.setAttribute("birthyear", birthyear);
 		
+		System.out.println("로그인:" + session.getAttribute("username") + ", " + session.getAttribute("userid"));
+		
 		// db에 유저 insert
 		UserVo userVo = new UserVo(userid, username, email, mobile, gender, age, birthyear);
 		userService.insertUser(userVo);
@@ -94,7 +93,7 @@ public class LoginController {
 	// 로그아웃
 	@RequestMapping(value = "/Logout", method = { RequestMethod.GET, RequestMethod.POST })
 	public String logout(HttpSession session) throws IOException {
-		System.out.println("로그아웃:" + session);
+		System.out.println("로그아웃:" + session.getAttribute("username") + ", " + session.getAttribute("userid"));
 		session.invalidate();
 		return "redirect:/";
 	}

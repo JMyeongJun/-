@@ -21,7 +21,9 @@ public class NaverLoginBO {
 
 	private final static String CLIENT_ID = "rW84iv1HRtSV5Q3MYTPn";
 	private final static String CLIENT_SECRET = "xzeqdWqNNj";
-	private final static String REDIRECT_URI = "http://localhost:9090/Login/Callback";
+//	private final static String REDIRECT_URI = "http://localhost:9090/Login/Callback";
+//	private final static String REDIRECT_URI = "http://221.162.247.16:9090/Login/Callback";
+	private final static String REDIRECT_URI = "http://bookroom.ga/Login/Callback";
 	private final static String SESSION_STATE = "oauth_state";
 
 	// 프로필 조회 API URL
