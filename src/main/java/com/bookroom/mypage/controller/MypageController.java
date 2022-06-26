@@ -72,17 +72,17 @@ public class MypageController {
 
 	// 장바구니 담기
 	 @RequestMapping("/InsertCart")
-	   public ModelAndView insertCart(HttpSession session, @RequestParam HashMap<String, Object> map) {
+	   public ModelAndView insertCart(HttpSession session, @RequestParam HashMap<String, Object> userMap) {
 
 	      ModelAndView mv = new ModelAndView();
-	      System.out.println("여기는 인서트:" + map );
+	      System.out.println("여기는 인서트:" + userMap );
 
 	      if (session.getAttribute("userid") == null) {
 	         mv.setViewName("redirect:/Login");
 	      } else {
-	         if(map.get("confirm") == null) {
-	         map.put("userid", session.getAttribute("userid"));
-	         mypageService.insertCart(map);
+	         if(userMap.get("confirm") == null) {
+		         userMap.put("userid", session.getAttribute("userid"));
+		         mypageService.insertCart(userMap);
 	         }
 	         mv.setViewName("redirect:/Mypage/Cart");
 	      }
@@ -107,7 +107,7 @@ public class MypageController {
 				mv.addObject("list", list);
 				mv.setViewName("/mypage/orderlist");
 
-				// 특정기간 조회
+			// 특정기간 조회
 			} else {
 				List<MypageVo> list = mypageService.getOrderListByPeriod(map, userid);
 				mv.addObject("list", list);
@@ -126,7 +126,7 @@ public class MypageController {
 
 		String userid = (String) session.getAttribute("userid");
 		;
-		/* int userCart = */mypageService.deleteCart(map, userid);
+		mypageService.deleteCart(map, userid);
 		mv.setViewName("redirect:/Mypage/Cart");
 
 		return mv;
